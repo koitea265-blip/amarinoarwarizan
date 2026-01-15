@@ -1,0 +1,2 @@
+# amarinoarwarizan
+あまりのあるわり算
