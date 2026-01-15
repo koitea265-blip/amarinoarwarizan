@@ -13,6 +13,12 @@
             font-family: 'Zen Maru Gothic', sans-serif;
             background-color: #f0f0f0;
             color: #333;
+            /* 画面表示時に全体を中央寄せ */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-bottom: 40px;
         }
         
         /* Print Page Setup */
@@ -25,9 +31,10 @@
         .sheet {
             background: white;
             width: 210mm;
-            min-height: 297mm;
+            min-height: 297mm; /* A4 height */
             margin: 20px auto;
-            padding: 12mm; /* 15mmから少し縮小して余裕を持たせる */
+            /* 余白を広げて中央配置感を強める */
+            padding: 20mm; 
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             position: relative;
             box-sizing: border-box;
@@ -38,15 +45,15 @@
         /* Header Box Styling */
         .header-box {
             border: 3px solid #000;
-            padding: 0.8rem 1.5rem; /* パディングを少し調整 */
-            margin-bottom: 1rem; /* 下マージンを縮小 */
+            padding: 0.8rem 1.5rem;
+            margin-bottom: 1rem;
         }
 
         /* Column Layout for Problems */
         .problems-wrapper {
             display: flex;
             gap: 2rem; 
-            margin-top: 0.5rem; /* 上マージンを縮小 */
+            margin-top: 0.5rem;
             flex-grow: 1; /* Allow problems to take available space */
         }
 
@@ -59,13 +66,14 @@
         }
 
         .problem-item {
-            font-size: 1.3rem; 
+            /* 余白を増やした分、文字と行間を少し詰めて収める */
+            font-size: 1.25rem; 
             border-bottom: 1px dashed #ccc;
-            padding-bottom: 0.5rem; /* 0.8remから縮小 */
-            margin-bottom: 0.8rem; /* 1.2remから縮小 */
+            padding-bottom: 0.4rem; 
+            margin-bottom: 0.6rem; 
             display: flex;
             align-items: center;
-            min-height: 2.8rem; /* 3remから少し縮小 */
+            min-height: 2.6rem; 
             white-space: nowrap;
             position: relative;
         }
@@ -79,7 +87,7 @@
 
         .problem-number {
             font-weight: bold;
-            width: 3rem; 
+            width: 2.8rem; 
             font-size: 1.1rem;
             color: #555;
             flex-shrink: 0;
@@ -112,13 +120,13 @@
         /* Input Box Styling */
         input.box {
             display: inline-block;
-            width: 2.5rem;
-            height: 2.5rem;
+            width: 2.4rem; /* 少し縮小 */
+            height: 2.4rem;
             border: 2px solid #555;
             margin: 0; 
             font-weight: bold;
             color: #333;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             border-radius: 6px;
             background: white;
             text-align: center;
@@ -159,7 +167,7 @@
             left: 50%;
             transform: translate(-50%, -55%);
             color: #ef4444; 
-            font-size: 3.5rem; 
+            font-size: 3.2rem; 
             font-family: "Times New Roman", serif; 
             pointer-events: none;
             display: none;
@@ -199,9 +207,9 @@
             align-items: center;
             color: #d00;
             border: 2px solid #555;
-            width: 2.5rem;
-            height: 2.5rem;
-            font-size: 1.3rem;
+            width: 2.4rem;
+            height: 2.4rem;
+            font-size: 1.25rem;
             border-radius: 6px;
             margin: 0 0.2rem;
         }
@@ -209,6 +217,7 @@
         /* Screen-only controls */
         .controls {
             max-width: 210mm;
+            width: 100%;
             margin: 20px auto;
             text-align: center;
             display: flex;
@@ -222,6 +231,8 @@
             body {
                 background: none;
                 margin: 0;
+                display: block; /* Flexを解除して印刷レイアウトに従う */
+                padding: 0;
                 -webkit-print-color-adjust: exact;
             }
             .controls, .toast {
@@ -229,11 +240,17 @@
             }
             .sheet {
                 box-shadow: none;
-                margin: 0;
+                margin: 0 auto; /* 中央配置 */
                 width: 100%;
-                height: 297mm; /* 高さを固定 */
+                height: 297mm;
                 page-break-after: always;
-                padding: 10mm; /* 印刷時はパディングをさらに調整して確実に収める */
+                /* 印刷時の余白を20mmに設定し、全体を中央に寄せる */
+                padding: 20mm; 
+                overflow: hidden;
+            }
+            
+            .sheet:last-of-type {
+                page-break-after: auto;
             }
         }
     </style>
@@ -251,7 +268,6 @@
         <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow transition flex items-center gap-2">
             <span>🖨️</span> 印刷する
         </button>
-        <!-- 変更箇所：IDを追加し、関数を変更 -->
         <button id="toggle-answer-btn" onclick="toggleAnswers()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg shadow transition flex items-center gap-2">
             <span>👀</span> 答えを見る
         </button>
